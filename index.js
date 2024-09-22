@@ -1,21 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors')
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
-app.use(cors({
-    origin : "http://localhost:3000",
-    credentials: true 
-}))
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.post('/bfhl', (req, res) => {
   const { data, file_b64 } = req.body;
-  const user_id = "shreyansh_malviya_03072003";
-  const email = "sp5289@srmist.edu.in";
-  const roll_number = "RA2111003010341";
+  const user_id = "aditi_123456";
+  const email = "ak7937@srmist.edu.in";
+  const roll_number = "RA2111003010314";
 
   const numbers = data.filter(item => !isNaN(item));
   const alphabets = data.filter(item => isNaN(item));
@@ -26,7 +23,7 @@ app.post('/bfhl', (req, res) => {
   let file_valid = false;
   let file_mime_type = null;
   let file_size_kb = 0;
-  
+
   if (file_b64) {
     file_valid = true;
     file_mime_type = "image/png";
@@ -46,14 +43,14 @@ app.post('/bfhl', (req, res) => {
     file_size_kb
   });
 });
-
 app.get('/bfhl', (req, res) => {
   res.status(200).json({
     operation_code: 1
   });
 });
-
-const port = 5000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.get('/', (req, res) => {
+  res.json({ message: "Hello From Express App" });
 });
+
+// Export the app for Vercel
+export default app;
